@@ -109,7 +109,7 @@ O projeto demonstra testes básicos com a classe `Calculadora`:
 ```java
 @Test
 @DisplayName("Should add two numbers")
-public void shouldAddTwoNumbers() {
+void shouldAddTwoNumbers() {
     // Arrange
     int a = 2;
     int b = 3;
@@ -155,19 +155,29 @@ void shouldThrowExceptionWhenDivideToZero() {
 
 ### Testes com Mockito
 
-Criação de mocks para isolar dependências:
+Criação de spies e stubs para isolar dependências:
 
 ```java
-@Mock
-private Database database;
+@Spy
+private RealDatabase database;
 
 @InjectMocks
 private UserService userService;
 
 @Test
-void testWithMock() {
-    when(database.findUser(anyString())).thenReturn(new User("test"));
-    // ...
+@DisplayName("Should return an active user")
+void shouldReturnAnActiveUser() {
+    // Arrange
+    int userId = 1;
+    String expectedStatus = "ACTIVE";
+    doReturn(expectedStatus).when(database).getStatus(eq(userId));
+
+    // Act
+    var output = userService.getUserStatus(userId);
+
+    // Assert
+    assertEquals(expectedStatus, output);
+    verify(database, times(1)).getStatus(eq(userId));
 }
 ```
 
