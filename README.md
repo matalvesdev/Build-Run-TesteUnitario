@@ -109,7 +109,7 @@ O projeto demonstra testes básicos com a classe `Calculadora`:
 ```java
 @Test
 @DisplayName("Should add two numbers")
-void shouldAddTwoNumbers() {
+public void shouldAddTwoNumbers() {
     // Arrange
     int a = 2;
     int b = 3;
